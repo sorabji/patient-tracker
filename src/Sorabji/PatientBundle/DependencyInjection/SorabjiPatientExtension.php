@@ -31,6 +31,15 @@ class SorabjiPatientExtension extends Extension
     $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
     $loader->load('services.xml');
 
+    /* sets values as keys for better searching */
+    $config = array_map(function($v){
+      $keyed = array();
+      foreach($v as $val){
+        $keyed[$val] = $val;
+      }
+      return $keyed;
+    }, $config);
+
     $container->setParameter('patient_config', $config);
   }
 }

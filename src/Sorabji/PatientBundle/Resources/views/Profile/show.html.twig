@@ -1,7 +1,13 @@
 {% extends "SorabjiPatientBundle::logged_in.html.twig" %}
 
 {% block content %}
-{% block fos_user_content %}
-{% include "FOSUserBundle:Profile:show_content.html.twig" %}
-{% endblock fos_user_content %}
+
+<div class="span4">
+
+  {% block fos_user_content %}
+  {% include "FOSUserBundle:Profile:show_content.html.twig" %}
+  {% endblock fos_user_content %}
+
+</div>
+
 {% endblock %}
