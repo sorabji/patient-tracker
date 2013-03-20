@@ -1,6 +1,6 @@
 {
-    "name": "symfony/framework-standard-edition",
-    "description": "The \"Symfony Standard Edition\" distribution",
+    "name": "sorabji/patient-tracker",
+    "description": "simple application for tracking patient records",
     "autoload": {
         "psr-0": { "": "src/" }
     },
