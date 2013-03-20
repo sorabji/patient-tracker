@@ -12,7 +12,6 @@
     <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" />
     <link rel="stylesheet" href="{{ asset('bundles/sorabjipatient/css/custom.css') }}" type="text/css" media="all" />
     <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.17/themes/dark-hive/jquery-ui.css" />
-    <link rel="stylesheet" href="{{ asset('bundles/sorabjipatient/js/jqplot/jquery.jqplot.css') }}" />
     {% endblock %}
 
     <!-- bootstrap-responsive needs to be loaded last -->
@@ -26,11 +25,6 @@
     '@SorabjiPatientBundle/Resources/public/js/DataTables-1.9.3/media/js/jquery.js'
     '@SorabjiPatientBundle/Resources/public/js/bootstrap.min.js'
     '@SorabjiPatientBundle/Resources/public/js/DataTables-1.9.3/media/js/jquery.dataTables.js'
-    '@SorabjiPatientBundle/Resources/public/js/jqplot/jquery.jqplot.js'
-    '@SorabjiPatientBundle/Resources/public/js/jqplot/plugins/jqplot.highlighter.min.js'
-    '@SorabjiPatientBundle/Resources/public/js/jqplot/plugins/jqplot.cursor.min.js'
-    '@SorabjiPatientBundle/Resources/public/js/jqplot/plugins/jqplot.dateAxisRenderer.min.js'
-    '@SorabjiPatientBundle/Resources/public/js/jqplot/plugins/jqplot.json2.min.js'
     '@SorabjiPatientBundle/Resources/public/js/custom.js'
     %}
     <script src="{{ asset_url }}" ></script>
@@ -47,7 +41,7 @@
 
         <div class="navbar navbar-static-top">
           <div class="navbar-inner">
-            <a class="brand" href="/">
+            <a class="brand" href="{{ path('portal') }}">
               Patients
             </a>
             <ul class="nav pull-right">
