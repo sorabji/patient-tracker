@@ -1,6 +1,6 @@
 <?php
 
-namespace Sorabji\PatientBundle\Form;
+namespace Sorabji\PatientBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;

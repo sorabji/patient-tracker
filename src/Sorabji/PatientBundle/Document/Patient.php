@@ -51,6 +51,22 @@ class Patient {
     protected $site;
 
     /**
+     * for JSON serialization
+     */
+    public function toArray(){
+        return array(
+          'id' => $this->id,
+          'name' => $this->name,
+          'indication' => $this->indication,
+          'counselor' => $this->counselor,
+          'created' => $this->getDateCreatedString(),
+          'diagnostic_procedure' => $this->diagnostic_procedure,
+          'race' => $this->race,
+          'site' => $this->site,
+        );
+    }
+
+    /**
      * Get id
      *
      * @return id $id

@@ -45,6 +45,7 @@
               Patients
             </a>
             <ul class="nav pull-right">
+              <li><a href="{{ path('patient_search') }}">Search</a></li>
               {% if app.security and is_granted("ROLE_ADMIN") %}
               <li><a href="{{ path('invitation') }}">Invites</a></li>
               {% endif %}
@@ -55,21 +56,27 @@
           </div>
         </div>
       </div>
+      {% if app.session.flash('notice') %}
       <div class="row" >
         <div class="span12">
-          {% if app.session.flash('notice') %}
           <div class="flash-message">
             <em>Notice</em>: {{ app.session.flash('notice') }}
           </div>
-          {% endif %}
-
-          {% block content_header %}
-          {% endblock %}
-
         </div>
       </div>
+      {% endif %}
+
+      <div class="row">
+{#
+        {% block content_header %}
+        {% endblock %}
+#}
+
+
         {% block content %}
         {% endblock %}
+
+      </div>
     </div>
 
   </body>

@@ -1,0 +1,92 @@
+{% extends "SorabjiPatientBundle::logged_in.html.twig" %}
+
+{% block content %}
+
+<div class="span4">
+
+  <h1>Patient Search</h1>
+
+  <form id="search_form" action="{{ path('patient_search') }}" method="post" {{ form_enctype(form) }}>
+    {{ form_widget(form) }}
+    <p>
+      <button class="btn-large" id="search" type="submit">Search</button>
+    </p>
+  </form>
+
+</div>
+
+<div class="span8">
+
+  <div id="results_container">
+
+    <table class="dtable records_list display">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Indication</th>
+          <th>Counselor</th>
+          <th>Created</th>
+          <th>Diagnostic Procedure</th>
+          <th>Race</th>
+          <th>Site</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Search For Results</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+
+
+  </div>
+
+</div>
+</div> <!-- ends .row -->
+
+<div class="row">
+  <div class="span4">
+    <ul class="record_actions">
+      <li>
+        <a href="{{ path('patient') }}">
+          Back to the list
+        </a>
+      </li>
+    </ul>
+  </div>
+
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+<script type="text/javascript">
+
+$(document).ready(function(){
+
+    var post_url = "{{ path('patient_results') }}"
+        formij = $("#search_form")
+        dtable = $(".dtable").dataTable();
+
+    $("#sorabji_patient_searchpatienttype_start_date").datepicker();
+    $("#sorabji_patient_searchpatienttype_end_date").datepicker();
+
+    $("#search").live('click', function(e){
+        e.preventDefault();
+        $.post(post_url, formij.serialize(), function(results){
+            if(results.success){
+                dtable.fnClearTable();
+                $.each(results.data, function(k,v){ dtable.fnAddData([v.name, v.indication, v.counselor, v.created, v.diagnostic_procedure, v.race, v.site]); });
+            } else {
+                alert("an error occurred retrieving the data from the server");
+            }
+        });
+    });
+});
+</script>
+{% endblock %}

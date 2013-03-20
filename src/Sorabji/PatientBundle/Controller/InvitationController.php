@@ -9,7 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use Sorabji\PatientBundle\Entity\Invitation;
-use Sorabji\PatientBundle\Form\InvitationType;
+use Sorabji\PatientBundle\Form\Type\InvitationType;
 
 /**
  * Invitation controller.

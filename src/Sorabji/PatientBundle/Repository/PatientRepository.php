@@ -12,4 +12,26 @@ use Doctrine\ODM\MongoDB\DocumentRepository;
  */
 class PatientRepository extends DocumentRepository
 {
+
+  public function getResults(array $params){
+
+    $params = array_filter($params, function($v){
+      return "choose" == $v || "" == $v ? false : true ;
+    });
+
+    $qb = $this->createQueryBuilder();
+    if(array_key_exists('start_date', $params) && array_key_exists('end_date', $params)){
+      $qb->field('date_created')->range($params['start_date'], $params['end_date']);
+    }
+
+    unset($params['start_date']);
+    unset($params['end_date']);
+
+    foreach($params as $k => $v){
+      $qb->field($k)->equals($v);
+    }
+    return $qb->getQuery()->execute();
+
+  }
+
 }

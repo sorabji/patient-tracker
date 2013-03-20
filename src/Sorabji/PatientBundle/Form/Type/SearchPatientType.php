@@ -8,11 +8,18 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 use Sorabji\PatientBundle\Form\DataTransformer\DateToStringTransformer;
 
-class PatientType extends AbstractType
+class SearchPatientType extends AbstractType
 {
+
   public function buildForm(FormBuilderInterface $builder, array $options)
   {
     $builder
+      ->add(
+        $builder->create('start_date', 'text')
+        ->addModelTransformer(new DateToStringTransformer()))
+      ->add(
+        $builder->create('end_date', 'text')
+        ->addModelTransformer(new DateToStringTransformer()))
       ->add('name')
       ->add('indication', 'choice', array(
         'choices' => array(
@@ -55,9 +62,7 @@ class PatientType extends AbstractType
           'GR' => 'GR',
           'TTU' => 'TTU',
         )))
-      ->add(
-        $builder->create('date_created', 'text')
-        ->addModelTransformer(new DateToStringTransformer()))
+
       ->add('diagnostic_procedure', 'choice', array(
         'choices' => array(
           "choose" => "choose",
@@ -98,12 +103,12 @@ class PatientType extends AbstractType
   public function setDefaultOptions(OptionsResolverInterface $resolver)
   {
     $resolver->setDefaults(array(
-      'data_class' => 'Sorabji\PatientBundle\Document\Patient'
+      'data_class' => null,
     ));
   }
 
   public function getName()
   {
-    return 'sorabji_patient_patienttype';
+    return 'sorabji_patient_searchpatienttype';
   }
 }

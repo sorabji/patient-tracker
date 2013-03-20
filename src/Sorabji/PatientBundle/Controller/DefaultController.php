@@ -3,6 +3,7 @@
 namespace Sorabji\PatientBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -10,6 +11,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use Sorabji\PatientBundle\Document\Patient;
 use Sorabji\PatientBundle\Form\Type\PatientType;
+use Sorabji\PatientBundle\Form\Type\SearchPatientType;
 
 class DefaultController extends Controller {
 
@@ -23,6 +25,43 @@ class DefaultController extends Controller {
     $dm = $this->get('doctrine_mongodb')->getManager();
     $patients = $dm->getRepository("SorabjiPatientBundle:Patient")->findAll();
     return array('entities' => $patients);
+  }
+
+  /**
+   * @Route("/search", name="patient_search")
+   * @Template()
+   * @Secure(roles="ROLE_USER")
+   */
+  public function searchAction(){
+    $form   = $this->createForm(new SearchPatientType());
+    return array('form' => $form->createView());
+  }
+
+  /**
+   * @Route("/results", name="patient_results")
+   * @Secure(roles="ROLE_USER")
+   */
+  public function resultsAction(Request $request){
+    $response = new JsonResponse();
+    if("POST" != $request->getMethod()){
+      return $response->setData(array("msg" => "POST allein bitte", "success" => false));
+    }
+
+    $form = $this->createForm(new SearchPatientType());
+    $form->bind($request);
+    $data = $form->getData();
+
+    $dm = $this->get('doctrine_mongodb')->getManager();
+    $patient_repo = $dm->getRepository("SorabjiPatientBundle:Patient");
+    $data = $patient_repo->getResults($data);
+    $array_data = $data->toArray();
+    $array_data = array_map(function($v){ return $v->toArray(); }, $array_data);
+    return $response->setData(array(
+      "msg" => "success",
+      "success" => true,
+      "data" => $array_data,
+      "rows" => count($array_data),
+    ));
   }
 
   /**
