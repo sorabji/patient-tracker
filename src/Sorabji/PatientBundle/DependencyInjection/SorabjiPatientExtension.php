@@ -32,6 +32,5 @@ class SorabjiPatientExtension extends Extension
     $loader->load('services.xml');
 
     $container->setParameter('patient_config', $config);
-
   }
 }

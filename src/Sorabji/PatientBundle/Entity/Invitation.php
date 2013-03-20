@@ -59,6 +59,14 @@ class Invitation
       return $this->code;
     }
 
+    public function getActiveString(){
+        return true === $this->active ? "Yes" : "No" ;
+    }
+
+    public function getSentString(){
+        return true === $this->active ? "Yes" : "No" ;
+    }
+
     /**
      * Get id
      *

@@ -54,7 +54,7 @@ doctrine:
 doctrine_mongodb:
     connections:
         default:
-            server: 
+            server:
             options: {connect: true}
     default_database: %mongo_database%
     document_managers:
@@ -80,3 +80,74 @@ fos_user:
         form:
             type:    sorabji_user_registration # this maps to an alias in the services.xml
             handler:    sorabji.registration.form.handler # this is just the plain id, no tags used...
+
+sorabji_patient:
+  indications:
+    - "choose"
+    - "AMA-35"
+    - "AMA-36"
+    - "AMA-37"
+    - "AMA-38"
+    - "AMA-39"
+    - "AMA-40"
+    - "AMA-41"
+    - "AMA-42"
+    - "AMA-43"
+    - "AMA-44"
+    - "AMA-45"
+    - "AMA>45"
+    - "ABNL US"
+    - "CF"
+    - "HEMOGLOBINOPATHIES"
+    - "FAM HX DS"
+    - "FAM HX T13"
+    - "FAM HX T18"
+    - "FAM HX OTHER CHROM ABNL"
+    - "FAM HX NTD"
+    - "FAM HX MR"
+    - "FRAG X"
+    - "MAT ANXIETY"
+    - "POSITIVE AFP"
+    - "SAB"
+    - "TAY SACHS"
+    - "TERATOGEN"
+    - "OTHER X-LINKED"
+    - "OTHER AR/AD"
+    - "OTHER"
+
+  counselors:
+    - "choose"
+    - 'FM'
+    - 'GR'
+    - 'TTU'
+
+  diagnostic_procedures:
+    - "choose"
+    - 'CVS'
+    - 'RA'
+    - 'dec'
+    - 'GConly'
+
+  races:
+    - "choose"
+    - "CN"
+    - "CH"
+    - "AA"
+    - "NA"
+    - "ME"
+    - "AI"
+    - "SEA"
+    - "Cambodian"
+    - "Loation"
+    - "Vietnamese"
+    - "Filipino"
+    - "Chinese"
+    - "Japanese"
+    - "Korean"
+
+  sites:
+    - "choose"
+    - 'CHULA'
+    - 'MR'
+    - 'TU'
+    - 'IN'

@@ -2,27 +2,29 @@
 
 {% block content %}
 
-<h1>Invitation edit</h1>
+<div class="span12">
 
-<form action="{{ path('invitation_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
+  <h1>Invitation edit</h1>
+
+  <form action="{{ path('invitation_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
     {{ form_widget(edit_form) }}
     <p>
-        <button type="submit">Edit</button>
+      <button class="btn btn-primary" type="submit">Edit</button>
     </p>
-</form>
+  </form>
 
-<ul class="record_actions">
+  <ul class="record_actions">
     <li>
-        <a href="{{ path('invitation') }}">
-            Back to the list
-        </a>
+      <a href="{{ path('invitation') }}">
+        Back to the list
+      </a>
     </li>
     <li>
-        <form action="{{ path('invitation_delete', { 'id': entity.id }) }}" method="post">
-            {{ form_widget(delete_form) }}
-            <button type="submit">Delete</button>
-        </form>
+      <form action="{{ path('invitation_delete', { 'id': entity.id }) }}" method="post">
+        {{ form_widget(delete_form) }}
+        <button class="btn btn-danger" type="submit">Delete</button>
+      </form>
     </li>
-</ul>
-
+  </ul>
+</div>
 {% endblock %}

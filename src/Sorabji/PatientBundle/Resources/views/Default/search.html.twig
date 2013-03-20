@@ -9,7 +9,8 @@
   <form id="search_form" action="{{ path('patient_search') }}" method="post" {{ form_enctype(form) }}>
     {{ form_widget(form) }}
     <p>
-      <button class="btn-large" id="search" type="submit">Search</button>
+      <button class="btn-small btn-inverse" id="reset" type="reset">Reset</button>
+      <button class="btn-large btn-primary" id="search" type="submit">Search</button>
     </p>
   </form>
 

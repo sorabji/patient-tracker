@@ -2,24 +2,26 @@
 
 {% block content %}
 
+<div class="span12">
 
-<h1>Patient Creation</h1>
+  <h1>Patient Creation</h1>
 
-<form action="{{ path('patient_create') }}" method="post" {{ form_enctype(form) }}>
+  <form action="{{ path('patient_create') }}" method="post" {{ form_enctype(form) }}>
     {{ form_widget(form) }}
     <p>
-        <button type="submit">Create</button>
+      <button class="btn btn-primary" type="submit">Create</button>
     </p>
-</form>
+  </form>
 
-<ul class="record_actions">
+  <ul class="record_actions">
     <li>
-        <a href="{{ path('patient') }}">
-            Back to the list
-        </a>
+      <a href="{{ path('patient') }}">
+        Back to the list
+      </a>
     </li>
-</ul>
+  </ul>
 
+</div>
 {% endblock %}
 
 {% block javascripts %}

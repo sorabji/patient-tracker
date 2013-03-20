@@ -15,6 +15,14 @@ use Sorabji\PatientBundle\Form\Type\SearchPatientType;
 
 class DefaultController extends Controller {
 
+  private $choices = null;
+  public function getChoices(){
+    if(null === $this->choices){
+      $this->choices = $this->container->parameters['patient_config'];
+    }
+    return $this->choices;
+
+  }
   /**
    * @Route("/", name="patient")
    * @Route("/portal", name="portal")
@@ -33,7 +41,7 @@ class DefaultController extends Controller {
    * @Secure(roles="ROLE_USER")
    */
   public function searchAction(){
-    $form   = $this->createForm(new SearchPatientType());
+    $form   = $this->createForm(new SearchPatientType($this->getChoices()));
     return array('form' => $form->createView());
   }
 
@@ -47,7 +55,7 @@ class DefaultController extends Controller {
       return $response->setData(array("msg" => "POST allein bitte", "success" => false));
     }
 
-    $form = $this->createForm(new SearchPatientType());
+    $form = $this->createForm(new SearchPatientType($this->getChoices()));
     $form->bind($request);
     $data = $form->getData();
 
@@ -100,7 +108,7 @@ class DefaultController extends Controller {
   public function newAction()
   {
     $entity = new Patient();
-    $form   = $this->createForm(new PatientType(), $entity);
+    $form   = $this->createForm(new PatientType($this->getChoices()), $entity);
 
     return array(
       'entity' => $entity,
@@ -120,7 +128,7 @@ class DefaultController extends Controller {
   public function createAction(Request $request)
   {
     $entity  = new Patient();
-    $form = $this->createForm(new PatientType(), $entity);
+    $form = $this->createForm(new PatientType($this->getChoices()), $entity);
     $form->bind($request);
 
     if ($form->isValid()) {
@@ -155,7 +163,7 @@ class DefaultController extends Controller {
       throw $this->createNotFoundException('Unable to find Patient.');
     }
 
-    $editForm = $this->createForm(new PatientType(), $entity);
+    $editForm = $this->createForm(new PatientType($this->getChoices()), $entity);
     $deleteForm = $this->createDeleteForm($id);
 
     return array(
@@ -185,7 +193,7 @@ class DefaultController extends Controller {
     }
 
     $deleteForm = $this->createDeleteForm($id);
-    $editForm = $this->createForm(new PatientType(), $entity);
+    $editForm = $this->createForm(new PatientType($this->getChoices()), $entity);
     $editForm->bind($request);
 
     if ($editForm->isValid()) {

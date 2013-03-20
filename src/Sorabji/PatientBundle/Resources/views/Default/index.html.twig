@@ -2,53 +2,56 @@
 
 {% block content %}
 
-<h1>Patient List</h1>
+<div class="span12">
 
-<table class="dtable records_list display">
+  <h1>Patient List</h1>
+
+  <table class="dtable records_list display">
     <thead>
-        <tr>
-            <th>Name</th>
-            <th>Indication</th>
-            <th>Counselor</th>
-            <th>Created</th>
-            <th>Diagnostic Procedure</th>
-            <th>Race</th>
-            <th>Site</th>
-            <th>Actions</th>
-        </tr>
+      <tr>
+        <th>Name</th>
+        <th>Indication</th>
+        <th>Counselor</th>
+        <th>Created</th>
+        <th>Diagnostic Procedure</th>
+        <th>Race</th>
+        <th>Site</th>
+        <th>Actions</th>
+      </tr>
     </thead>
     <tbody>
-    {% for entity in entities %}
-        <tr>
-            <td><a href="{{ path('patient_show', { 'id': entity.id }) }}">{{ entity.name }}</a></td>
-            <td>{{ entity.indication }}</td>
-            <td>{{ entity.counselor }}</td>
-            <td>{{ entity.getDateCreatedString }}</td>
-            <td>{{ entity.getDiagnosticProcedure }}</td>
-            <td>{{ entity.race }}</td>
-            <td>{{ entity.site }}</td>
-            <td>
-                <ul>
-                    <li>
-                        <a href="{{ path('patient_show', { 'id': entity.id }) }}">show</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('patient_edit', { 'id': entity.id }) }}">edit</a>
-                    </li>
-                </ul>
-            </td>
-        </tr>
-    {% endfor %}
+      {% for entity in entities %}
+      <tr>
+        <td><a href="{{ path('patient_show', { 'id': entity.id }) }}">{{ entity.name }}</a></td>
+        <td>{{ entity.indication }}</td>
+        <td>{{ entity.counselor }}</td>
+        <td>{{ entity.getDateCreatedString }}</td>
+        <td>{{ entity.getDiagnosticProcedure }}</td>
+        <td>{{ entity.race }}</td>
+        <td>{{ entity.site }}</td>
+        <td>
+          <ul>
+            <li>
+              <a href="{{ path('patient_show', { 'id': entity.id }) }}">show</a>
+            </li>
+            <li>
+              <a href="{{ path('patient_edit', { 'id': entity.id }) }}">edit</a>
+            </li>
+          </ul>
+        </td>
+      </tr>
+      {% endfor %}
     </tbody>
-</table>
+  </table>
 
-<ul>
+  <ul>
     <li>
-        <a href="{{ path('patient_new') }}">
-            Create a new Patient
-        </a>
+      <a href="{{ path('patient_new') }}">
+        Create a new Patient
+      </a>
     </li>
-</ul>
+  </ul>
+</div>
 
 {% endblock %}
 

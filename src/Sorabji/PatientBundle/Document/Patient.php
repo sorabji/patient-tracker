@@ -3,6 +3,7 @@
 namespace Sorabji\PatientBundle\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
+use Symfony\Component\Validator\Constraints as Assert;
 
 
 /**
@@ -17,36 +18,63 @@ class Patient {
 
     /**
      * @MongoDB\String
+     * @Assert\NotBlank()
      */
     protected $name;
 
     /**
      * @MongoDB\String
+     * @Assert\Regex(
+     *  pattern="/choose/",
+     *  match=false,
+     *  message="Please choose an option for this field"
+     * )
      */
     protected $indication;
 
     /**
      * @MongoDB\String
+     * @Assert\Regex(
+     *  pattern="/choose/",
+     *  match=false,
+     *  message="Please choose an option for this field"
+     * )
      */
     protected $counselor;
 
     /**
      * @MongoDB\Date
+     * @Assert\NotBlank()
      */
     protected $date_created;
 
     /**
      * @MongoDB\String
+     * @Assert\Regex(
+     *  pattern="/choose/",
+     *  match=false,
+     *  message="Please choose an option for this field"
+     * )
      */
     protected $diagnostic_procedure;
 
     /**
      * @MongoDB\String
+     * @Assert\Regex(
+     *  pattern="/choose/",
+     *  match=false,
+     *  message="Please choose an option for this field"
+     * )
      */
     protected $race;
 
     /**
      * @MongoDB\String
+     * @Assert\Regex(
+     *  pattern="/choose/",
+     *  match=false,
+     *  message="Please choose an option for this field"
+     * )
      */
     protected $site;
 

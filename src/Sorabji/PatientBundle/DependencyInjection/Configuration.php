@@ -18,11 +18,22 @@ class Configuration implements ConfigurationInterface
   public function getConfigTreeBuilder()
   {
     $treeBuilder = new TreeBuilder();
-    $rootNode = $treeBuilder->root('patient');
+    $rootNode = $treeBuilder->root('sorabji_patient');
 
     // Here you should define the parameters that are allowed to
     // configure your bundle. See the documentation linked above for
     // more information on that topic.
+
+    $rootNode
+      ->children()
+          ->arrayNode('indications')->prototype('scalar')->end()->end()
+          ->arrayNode('counselors')->prototype('scalar')->end()->end()
+          ->arrayNode('diagnostic_procedures')->prototype('scalar')->end()->end()
+          ->arrayNode('races')->prototype('scalar')->end()->end()
+          ->arrayNode('sites')->prototype('scalar')->end()->end()
+        ->end()
+      ->end()
+      ;
 
     return $treeBuilder;
   }
