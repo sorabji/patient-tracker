@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- http://www.phpunit.de/manual/current/en/appendixes.configuration.html -->
+<phpunit
+    backupGlobals               = "false"
+    backupStaticAttributes      = "false"
+    colors                      = "true"
+    convertErrorsToExceptions   = "true"
+    convertNoticesToExceptions  = "true"
+    convertWarningsToExceptions = "true"
+    processIsolation            = "false"
+    stopOnFailure               = "false"
+    syntaxCheck                 = "false"
+    bootstrap                   = "bootstrap.php.cache" >
+
+    <testsuites>
+        <testsuite name="Project Test Suite">
+            <directory>../src/*/*Bundle/Tests</directory>
+            <directory>../src/*/Bundle/*Bundle/Tests</directory>
+        </testsuite>
+    </testsuites>
+
+    <!--
+    <php>
+        <server name="KERNEL_DIR" value="/path/to/your/app/" />
+    </php>
+    -->
+
+    <filter>
+        <whitelist>
+            <directory>../src</directory>
+            <exclude>
+                <directory>../src/*/*Bundle/Resources</directory>
+                <directory>../src/*/*Bundle/Tests</directory>
+                <directory>../src/*/Bundle/*Bundle/Resources</directory>
+                <directory>../src/*/Bundle/*Bundle/Tests</directory>
+            </exclude>
+        </whitelist>
+    </filter>
+
+    <logging>
+      <log type="coverage-html" target="./logs/tests/report" charset="UTF-8"
+           yui="true" highlight="false"
+           lowUpperBound="35" highLowerBound="70"/>
+      <log type="coverage-php" target="./logs/test/scoverage.serialized"/>
+      <log type="json" target="./logs/tests/logfile.json"/>
+      <log type="testdox-html" target="./logs/tests/testdox.html"/>
+      <log type="testdox-text" target="./logs/tests/testdox.txt"/>
+    </logging>
+
+</phpunit>

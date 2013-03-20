@@ -1,0 +1,38 @@
+; These parameters can be imported into other config files
+; by enclosing the key with % (like %database_user%)
+; Comments start with ';', as in php.ini
+
+[parameters]
+
+    database_driver="pdo_mysql"
+    database_host="localhost"
+    database_port=""
+    database_name=""
+    database_user=""
+    database_password=""
+    mongo_url=""
+    mongo_database=""
+
+    dev_database_driver="pdo_mysql"
+    dev_database_host="localhost"
+    dev_database_port=""
+    dev_database_name=""
+    dev_database_user=""
+    dev_database_password=""
+    mongo_dev_url=""
+    mongo_dev_database=""
+
+    test_database_driver="pdo_mysql"
+    test_database_host="localhost"
+    test_database_port=""
+    test_database_name=""
+    test_database_user=""
+    test_database_password=""
+
+    mailer_transport="smtp"
+    mailer_host="localhost"
+    mailer_user=""
+    mailer_password=""
+
+    locale="en"
+    secret="83hfk2389dh2ifhskdkeg892827gh"

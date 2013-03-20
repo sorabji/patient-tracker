@@ -1,0 +1,15 @@
+{% form_theme form theme %}
+
+<br /> 
+
+<div class="textbox half left">
+  <h2>Edit Profile Details</h2>
+  <div class="textbox_content">
+    <form action="{{ path('fos_user_profile_edit') }}" {{ form_enctype(form) }} method="POST" class="fos_user_profile_edit">
+      {{ form_widget(form) }}
+      <div>
+        <input type="submit" value="{{ 'profile.edit.submit'|trans({}, 'FOSUserBundle') }}" />
+      </div>
+    </form>
+  </div>
+</div>

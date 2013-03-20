@@ -1,0 +1,63 @@
+{% extends "SorabjiPatientBundle::logged_in.html.twig" %}
+
+{% block content %}
+
+
+<h1>Invitation list</h1>
+
+<table class="dtable records_list display">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Code</th>
+            <th>Email</th>
+            <th>Notes</th>
+            <th>Sent</th>
+            <th>Active</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for entity in entities %}
+        <tr>
+            <td><a href="{{ path('invitation_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+            <td>{{ entity.code }}</td>
+            <td>{{ entity.email }}</td>
+            <td>{{ entity.notes }}</td>
+            <td>{{ entity.sent }}</td>
+            <td>{{ entity.active }}</td>
+            <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('invitation_show', { 'id': entity.id }) }}">show</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('invitation_edit', { 'id': entity.id }) }}">edit</a>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+<ul>
+    <li>
+        <a href="{{ path('invitation_new') }}">
+            Create a new entry
+        </a>
+    </li>
+</ul>
+
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+
+<script type="text/javascript">
+  $(document).ready( function () {
+  $('.records_list').dataTable();
+  } );
+</script>
+
+{% endblock %}

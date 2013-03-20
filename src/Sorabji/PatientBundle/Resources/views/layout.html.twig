@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;
+                                             charset=utf-8" />
+
+    <title>{% block title %}Patients{% endblock %}</title>
+
+    {% block stylesheets %}
+    <link rel="stylesheet" media="screen" href="{{ asset('bundles/sorabjipatient/css/bootstrap.min.css') }}" />
+    <link rel="stylesheet" href="http://code.jquery.com/ui/jquery-ui-git.css" type="text/css" media="all" />
+    <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" />
+    <link rel="stylesheet" href="{{ asset('bundles/sorabjipatient/css/global.css') }}" type="text/css" media="all" />
+    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.17/themes/dark-hive/jquery-ui.css" />
+    <!-- <link rel="stylesheet" href="{{ asset('bundles/sorabjipatient/js/DataTables-1.9.3/media/css/base_datatable.css') }}" type="text/css" media="all" /> -->
+    {% endblock %}
+
+    <!-- bootstrap-responsive needs to be loaded last -->
+    <link
+       href="{{ asset('bundles/sorabjipatient/css/bootstrap-responsive.min.css') }}"
+       rel="stylesheet"
+       media="all" />
+
+    {% block javascripts %}
+    {% javascripts
+    '@SorabjiPatientBundle/Resources/public/js/DataTables-1.9.3/media/js/jquery.js'
+    '@SorabjiPatientBundle/Resources/public/js/bootstrap.min.js'
+    '@SorabjiPatientBundle/Resources/public/js/DataTables-1.9.3/media/js/jquery.dataTables.js'
+    '@SorabjiPatientBundle/Resources/public/js/flot/jquery.flot.js'
+    '@SorabjiPatientBundle/Resources/public/js/flot/jquery.flot.time.js'
+    '@SorabjiPatientBundle/Resources/public/js/custom.js'
+    %}
+    <script src="{{ asset_url }}" ></script>
+    <script src="http://code.jquery.com/ui/jquery-ui-git.js"></script>
+
+
+    {% endjavascripts %}
+    {% endblock %}
+
+
+  </head>
+  <body>
+    <div class="container-fluid" >
+      <div class="row" id="symfony-header">
+
+        <div class="navbar navbar-static-top">
+          <div class="navbar-inner">
+            <a class="brand" href="/">
+              Offer Loading
+            </a>
+            <ul class="nav pull-right">
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="row" >
+        <div class="span12"></div>
+        <div class="span8">
+          {% if app.session.flash('notice') %}
+          <div class="flash-message">
+            <em>Notice</em>: {{ app.session.flash('notice') }}
+          </div>
+          {% endif %}
+
+          {% block content_header %}
+          {% endblock %}
+        </div>
+      </div>
+      <div class="row">
+        <div class="span12 pagination-centered">
+          {% block content %}
+            {% block fos_user_content %}{% endblock %}
+          {% endblock %}
+        </div>
+      </div>
+    </div>
+
+  </body>
+  <footer>
+  </footer>
+
+</html>

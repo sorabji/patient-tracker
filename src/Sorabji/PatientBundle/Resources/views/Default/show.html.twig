@@ -1,0 +1,60 @@
+{% extends "SorabjiPatientBundle::logged_in.html.twig" %}
+
+{% block content %}
+
+
+<h1>Patient</h1>
+
+<table class="table table-striped record_properties">
+    <tbody>
+        <tr>
+            <th>Name</th>
+            <td>{{ entity.name }}</td>
+        </tr>
+        <tr>
+            <th>Indication</th>
+            <td>{{ entity.indication }}</td>
+        </tr>
+        <tr>
+            <th>counselor</th>
+            <td>{{ entity.counselor }}</td>
+        </tr>
+        <tr>
+            <th>Created</th>
+            <td>{{ entity.getDateCreatedString }}</td>
+        </tr>
+        <tr>
+            <th>Diagnostic Procedure</th>
+            <td>{{ entity.getDiagnosticProcedure }}</td>
+        </tr>
+        <tr>
+            <th>Race</th>
+            <td>{{ entity.race }}</td>
+        </tr>
+        <tr>
+            <th>Site</th>
+            <td>{{ entity.site }}</td>
+        </tr>
+    </tbody>
+</table>
+
+<ul class="record_actions">
+    <li>
+        <a href="{{ path('patient') }}">
+            Back to the Patient list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('patient_edit', { 'id': entity.id }) }}">
+            Edit
+        </a>
+    </li>
+    <li>
+        <form action="{{ path('patient_delete', { 'id': entity.id }) }}" method="post">
+            {{ form_widget(delete_form) }}
+            <button type="submit">Delete</button>
+        </form>
+    </li>
+</ul>
+
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends "SorabjiPatientBundle::logged_in.html.twig" %}
+
+{% block content %}
+
+
+<h1>Patient Creation</h1>
+
+<form action="{{ path('patient_create') }}" method="post" {{ form_enctype(form) }}>
+    {{ form_widget(form) }}
+    <p>
+        <button type="submit">Create</button>
+    </p>
+</form>
+
+<ul class="record_actions">
+    <li>
+        <a href="{{ path('patient') }}">
+            Back to the list
+        </a>
+    </li>
+</ul>
+
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+<script type="text/javascript">
+$(document).ready(function(){
+    $("#sorabji_patient_patienttype_date_created").datepicker();
+});
+</script>
+{% endblock %}

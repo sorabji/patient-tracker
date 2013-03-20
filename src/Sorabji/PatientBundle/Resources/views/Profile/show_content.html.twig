@@ -1,0 +1,10 @@
+<br />
+<div class="textbox half left">
+  <h2>View Profile Details</h2>
+
+  <div class="textbox_content">
+    <p>{{ 'profile.show.username'|trans({}, 'FOSUserBundle') }}: {{ user.username }}</p>
+    <p>{{ 'profile.show.email'|trans({}, 'FOSUserBundle') }}: {{ user.email }}</p>
+    <p><a href="{{ path('fos_user_change_password') }}">Change Password</a></p>
+  </div>
+</div>

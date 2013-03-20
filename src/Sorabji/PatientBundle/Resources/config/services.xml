@@ -1,0 +1,31 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+
+<services>
+        <service id="sorabji.registration.form.type" class="Sorabji\PatientBundle\Form\Type\RegistrationFormType">
+            <argument>%fos_user.model.user.class%</argument>
+            <tag name="form.type" alias="sorabji_user_registration" />
+        </service>
+
+        <service id="sorabji.invitation.form.type" class="Sorabji\PatientBundle\Form\Type\InvitationFormType">
+            <argument type="service" id="sorabji.invitation.form.data_transformer"/>
+            <tag name="form.type" alias="sorabji_invitation_type" />
+        </service>
+
+        <service id="sorabji.invitation.form.data_transformer" class="Sorabji\PatientBundle\Form\DataTransformer\InvitationToCodeTransformer">
+            <argument type="service" id="doctrine.orm.entity_manager"/>
+        </service>
+
+        <service id="sorabji.registration.form.handler" class="Sorabji\PatientBundle\Form\Handler\RegistrationFormHandler" scope="request" public="false">
+            <argument type="service" id="fos_user.registration.form" />
+            <argument type="service" id="request" />
+            <argument type="service" id="fos_user.user_manager" />
+            <argument type="service" id="fos_user.mailer" />
+            <argument type="service" id="doctrine.orm.entity_manager" />
+        </service>
+    </services>
+</container>

@@ -1,0 +1,56 @@
+imports:
+    - { resource: config_dev.yml }
+
+framework:
+    test: ~
+    session:
+        storage_id: session.storage.filesystem
+
+web_profiler:
+    toolbar: false
+    intercept_redirects: false
+
+swiftmailer:
+    disable_delivery: true
+
+doctrine:
+    dbal:
+        driver:   %test_database_driver%
+        # driver:   pdo_sqlite
+        host:     %test_database_host%
+        port:     %test_database_port%
+        dbname:   %test_database_name%
+        user:     %test_database_user%
+        password: %test_database_password%
+        charset:  UTF8
+        # path: %kernel.root_dir%/%test_database_name%
+        # memory: true
+
+old_sound_rabbit_mq:
+    connections:
+        default:
+            host:      'localhost'
+            port:      5672
+            user:      %test_rabbit_user%
+            password:  %test_rabbit_password%
+            vhost:     %test_rabbit_vhost%
+    producers:
+        insert_lead:
+            connection: default
+            exchange_options: {name: 'insert-lead', type: direct}
+        outbound_feed:
+            connection: default
+            exchange_options: {name: 'outbound-feed', type: direct}
+    consumers:
+        insert_lead:
+            connection: default
+            exchange_options: {name: 'insert-lead', type: direct}
+            queue_options:    {name: 'insert-lead'}
+            qos_options: {prefetch_count: 2}
+            callback:         insert_lead_service
+        outbound_feed:
+            connection: default
+            exchange_options: {name: 'outbound-feed', type: direct}
+            queue_options:    {name: 'outbound-feed'}
+            qos_options: {prefetch_count: 2}
+            callback:         outbound_feed_service

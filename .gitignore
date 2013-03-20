@@ -1,0 +1,15 @@
+/web/bundles/
+/web/js/
+/web/css/
+/web/uploads/
+/app/bootstrap*
+/app/cache/*
+/app/logs/*
+/app/phpunit.xml
+/vendor/
+/app/config/parameters.ini
+/tests/*
+tags
+composer.json
+phpunit.out
+php_errors.log

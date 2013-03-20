@@ -1,0 +1,37 @@
+{% extends "SorabjiPatientBundle::logged_in.html.twig" %}
+
+{% block content %}
+
+<h1>Patient Edit</h1>
+
+<form action="{{ path('patient_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
+    {{ form_widget(edit_form) }}
+    <p>
+        <button type="submit">Edit</button>
+    </p>
+</form>
+
+<ul class="record_actions">
+    <li>
+        <a href="{{ path('patient') }}">
+            Back to the Patient list
+        </a>
+    </li>
+    <li>
+        <form action="{{ path('patient_delete', { 'id': entity.id }) }}" method="post">
+            {{ form_widget(delete_form) }}
+            <button type="submit">Delete</button>
+        </form>
+    </li>
+</ul>
+
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+<script type="text/javascript">
+$(document).ready(function(){
+    $("#sorabji_patient_patienttype_date_created").datepicker();
+});
+</script>
+{% endblock %}

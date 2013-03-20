@@ -1,0 +1,50 @@
+{# {% form_theme form theme %} #}
+
+{% set error = error|default(false) %}
+{% if error %}
+<div class="message info" style="display: block;">{{ error|trans({}, 'FOSUserBundle') }} <span class="close" title="Dismiss"></span> </div>
+{% endif %}
+
+<form action="{{ path('fos_user_registration_register') }}" {{ form_enctype(form) }} method="POST" class="fos_user_registration_register">
+  {{ form_widget(form._token) }}
+
+  <p class="element">
+        {{ form_label(form.first_name, null, { 'attr': {'class': 'text'} }) }}
+        {{ form_errors(form.first_name) }}
+        {{ form_widget(form.first_name, { 'attr': {'class': 'text'} }) }}
+  </p>
+  <p class="element">
+        {{ form_label(form.last_name, null, { 'attr': {'class': 'text'} }) }}
+        {{ form_errors(form.last_name) }}
+        {{ form_widget(form.last_name, { 'attr': {'class': 'text'} }) }}
+  </p>
+
+  <p class="element">
+        {{ form_label(form.username, null, { 'attr': {'class': 'text'} }) }}
+        {{ form_errors(form.username) }}
+        {{ form_widget(form.username, { 'attr': {'class': 'text'} }) }}
+  </p>
+
+  <p class="element">
+        {{ form_label(form.email, null, { 'attr': {'class': 'text'} }) }}
+        {{ form_errors(form.email) }}
+        {{ form_widget(form.email, { 'attr': {'class': 'text'} }) }}
+  </p>
+  <p class="element">
+        {{ form_label(form.invitation, null, { 'attr': {'class': 'text'} }) }}
+        {{ form_errors(form.invitation) }}
+        {{ form_widget(form.invitation, { 'attr': {'class': 'text'} }) }}
+  </p>
+  <p>
+  {{ form_widget(form.plainPassword, {'attr': {'class': 'password'}}) }}
+  </p>
+
+
+  <div class="form_buttons">
+    <p class="element formend ">
+    <input type="submit" id="_submit" name="_submit" value="{{ 'registration.submit'|trans({}, 'FOSUserBundle') }}" class="submit right-float" />
+    </p>
+  </div>
+
+</form>
+
