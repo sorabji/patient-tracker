@@ -94,6 +94,12 @@ class Patient {
         );
     }
 
+    public function __construct()
+    {
+        $this->date_created = new \DateTime("now");
+
+    }
+
     /**
      * Get id
      *

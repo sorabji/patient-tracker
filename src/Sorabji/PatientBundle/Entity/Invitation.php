@@ -64,7 +64,7 @@ class Invitation
     }
 
     public function getSentString(){
-        return true === $this->active ? "Yes" : "No" ;
+        return true === $this->sent ? "Yes" : "No" ;
     }
 
     /**
