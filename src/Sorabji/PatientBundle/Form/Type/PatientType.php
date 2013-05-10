@@ -41,13 +41,16 @@ class PatientType extends AbstractType
 
   public function setDefaultOptions(OptionsResolverInterface $resolver)
   {
-    $resolver->setDefaults(array(
-      'data_class' => 'Sorabji\PatientBundle\Document\Patient'
-    ));
+    $resolver->setDefaults(
+        [
+            'data_class' => 'Sorabji\PatientBundle\Document\Patient',
+            'csrf_protection' => false,
+        ]
+    );
   }
 
   public function getName()
   {
-    return 'sorabji_patient_patienttype';
+    return 'patient';
   }
 }
