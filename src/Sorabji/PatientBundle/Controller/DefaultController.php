@@ -32,15 +32,13 @@ class DefaultController extends Controller {
      * @Secure(roles="ROLE_USER")
      */
     public function indexAction(){
-        $dm = $this->get('doctrine_mongodb')->getManager();
-        $patients = $dm->getRepository("SorabjiPatientBundle:Patient")->findAll();
-
         $entity = new Patient();
-        $form   = $this->createForm(new PatientType($this->getChoices()), $entity);
+        $newForm   = $this->createForm(new PatientType($this->getChoices()), $entity);
+        $editForm   = $this->createForm(new PatientType($this->getChoices(), 'edit_patient'), $entity);
 
         return [
-            'entities' => $patients,
-            'form' => $form->createView(),
+            'newForm' => $newForm->createView(),
+            'editForm' => $editForm->createView(),
         ];
     }
 
@@ -207,13 +205,18 @@ class DefaultController extends Controller {
         }
 
         $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createForm(new PatientType($this->getChoices()), $entity);
+        $editForm = $this->createForm(new PatientType($this->getChoices(), 'edit_patient'), $entity);
         $editForm->bind($request);
 
         if ($editForm->isValid()) {
             $dm->persist($entity);
             $dm->flush();
-            return $this->redirect($this->generateUrl('patient_edit', array('id' => $id)));
+            if (!$request->isXmlHttpRequest()) {
+                return $this->redirect($this->generateUrl('patient_edit', array('id' => $id)));
+            } else {
+                $response = new JsonResponse();
+                return $response->setData(['success' => true,]);
+            }
         }
 
         return array(

@@ -27,6 +27,7 @@ class AppKernel extends Kernel {
       new JMS\DiExtraBundle\JMSDiExtraBundle($this),
       new JMS\SecurityExtraBundle\JMSSecurityExtraBundle(),
       new FOS\UserBundle\FOSUserBundle(),
+      new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
       new Sorabji\PatientBundle\SorabjiPatientBundle(),
     );
 

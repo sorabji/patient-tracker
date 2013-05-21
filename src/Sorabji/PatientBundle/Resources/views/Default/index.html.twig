@@ -5,10 +5,15 @@
 <div class="span12">
 
   <h1>Patient List</h1>
+  <div style="margin-bottom:7px">
+    <button id="create-patient">Create Patient</button>
+    <button id="reload-data">Reload Table</button>
+  </div>
 
-  <table class="dtable records_list display">
+  <table id="mememe" class="records display">
     <thead>
       <tr>
+        <th>Id</th>
         <th>Name</th>
         <th>Indication</th>
         <th>Counselor</th>
@@ -16,25 +21,10 @@
         <th>Diagnostic Procedure</th>
         <th>Race</th>
         <th>Site</th>
-        <th>Actions</th>
+        <th width="150">Actions</th>
       </tr>
     </thead>
     <tbody>
-      {% for entity in entities %}
-      <tr>
-        <td><a href="{{ path('patient_show', { 'id': entity.id }) }}">{{ entity.name }}</a></td>
-        <td>{{ entity.indication }}</td>
-        <td>{{ entity.counselor }}</td>
-        <td>{{ entity.getDateCreatedString }}</td>
-        <td>{{ entity.getDiagnosticProcedure }}</td>
-        <td>{{ entity.race }}</td>
-        <td>{{ entity.site }}</td>
-        <td>
-          <button class="patient-show">show</button>
-          <button class="patient-edit" >edit</button>
-        </td>
-      </tr>
-      {% endfor %}
     </tbody>
   </table>
 
@@ -74,12 +64,20 @@
   </div>
 
   <div id="new-patient" >
-    <form id="new-patient-form" action="{{ path('patient_create') }}" method="post" {{ form_enctype(form) }}>
-      {{ form_widget(form) }}
+    <form id="new-patient-form" action="{{ path('patient_create') }}" method="post" {{ form_enctype(newForm) }}>
+      {{ form_widget(newForm) }}
     </form>
   </div>
+
+  <div id="edit-patient" >
+    <form id="edit-patient-form" action="{{ path('patient_create') }}" method="post" {{ form_enctype(editForm) }}>
+      {{ form_widget(editForm) }}
+    </form>
+  </div>
+
   <br />
-  <button id="create-patient">Create Patient</button>
+
+
 </div>
 
 {% endblock %}
@@ -88,16 +86,18 @@
 {{ parent() }}
 
 <script type="text/javascript">
-$(document).ready( function () {
-    var dTable = $('.records_list').dataTable();
+$(document).ready(function(){
 
+    // create patient vars
     var name = $( "#patient_name" ),
-        indication = $( "patient_indication" ),
-        counselor = $( "patient_counselor" ),
-        created = $( "patient_date_created" ),
-        diagnosticProcedure = $( "patient_diagnostic_procedure" ),
-        race = $( "patient_race" ),
-        site = $( "patient_site" ),
+        indication = $( "#patient_indication" ),
+        counselor = $( "#patient_counselor" ),
+        created = $( "#patient_date_created" ),
+        diagnosticProcedure = $( "#patient_diagnostic_procedure" ),
+        race = $( "#patient_race" ),
+        site = $( "#patient_site" ),
+
+        // show patient vars
         show_name = $( "#show-patient-name" ),
         show_indication = $( "#show-patient-indication" ),
         show_counselor = $( "#show-patient-counselor" ),
@@ -105,20 +105,95 @@ $(document).ready( function () {
         show_diagnosticProcedure = $( "#show-patient-diagnostic-procedure" ),
         show_race = $( "#show-patient-race" ),
         show_site = $( "#show-patient-site" ),
-        allFields = $( [] )
+
+        // edit patient vars
+        edit_name = $( "#edit_patient_name" ),
+        edit_indication = $( "#edit_patient_indication" ),
+        edit_counselor = $( "#edit_patient_counselor" ),
+        edit_created = $( "#edit_patient_date_created" ),
+        edit_diagnosticProcedure = $( "#edit_patient_diagnostic_procedure" ),
+        edit_race = $( "#edit_patient_race" ),
+        edit_site = $( "#edit_patient_site" ),
+
+        EditingId = '';
+        RowIndex = -1;
+        TrData = '';
+
+        allNewFields = $( [] )
+            .add( diagnosticProcedure )
             .add( name )
             .add( indication )
             .add( counselor )
             .add( created )
-            .add( diagnosticProcedure )
             .add( race )
             .add( site )
+
+        allEditFields = $( [] )
+            .add( edit_diagnosticProcedure )
+            .add( edit_name )
+            .add( edit_indication )
+            .add( edit_counselor )
+            .add( edit_created )
+            .add( edit_race )
+            .add( edit_site )
     ;
 
-    var getDataFromNode = function(node) {
+    $("#reload-data").button()
+        .live('click', function(e){
+            reloadData();
+        });
+
+    var loadViewForm = function(distance) {
+        if('doeet' !== distance){
+            TrData = $( $( this ).parent().parent().parent());
+            RowIndex = dTable.fnGetPosition( $(this).closest('tr')[0] );
+        }
+
+        var payload = getDataFromNode(TrData, RowIndex);
+        show_name.text(payload[0]);
+        show_indication.text(payload[1]);
+        show_counselor.text(payload[2]);
+        show_created.text(payload[3]);
+        show_diagnosticProcedure.text(payload[4]);
+        show_race.text(payload[5]);
+        show_site.text(payload[6]);
+        $( "#view-patient" ).dialog( "open" );
+    };
+
+    var loadEditForm = function(distance) {
+        if('doeet' !== distance){
+            TrData = $( $( this ).parent().parent().parent());
+            RowIndex = dTable.fnGetPosition( $(this).closest('tr')[0] );
+        }
+
+        var payload = getDataFromNode(TrData, RowIndex);
+        edit_name.val(payload[0]);
+        edit_indication.val(payload[1]);
+        edit_counselor.val(payload[2]);
+        edit_created.val(payload[3]);
+        edit_diagnosticProcedure.val(payload[4]);
+        edit_race.val(payload[5]);
+        edit_site.val(payload[6]);
+        $( "#edit-patient" ).dialog( "open" );
+    };
+
+    var setViewButtons = function() {
+        $( ".patient-show" )
+            .button()
+            .click(loadViewForm);
+    };
+
+    var setEditButtons = function() {
+        $( ".patient-edit" )
+            .button()
+            .click(loadEditForm);
+    };
+
+    var getDataFromNode = function(node, index) {
+        EditingId = dTable.fnGetData()[index][0];
         var data = [];
         var tds = $(node.children("td"));
-        data.push(tds[0].children[0].innerHTML);
+        data.push(tds[0].innerHTML);
         data.push(tds[1].innerHTML);
         data.push(tds[2].innerHTML);
         data.push(tds[3].innerHTML);
@@ -128,12 +203,50 @@ $(document).ready( function () {
         return data;
     };
 
+    var dTable = $('#mememe').dataTable({
+        'bJQueryUI': true,
+        'aaSorting' : [[ 3, "desc" ]],
+        'aoColumns' : [
+            {
+                "bVisible": false,
+                "bSearchable": true,
+            },
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+        ],
+        "fnDrawCallback": function( oSettings ) {
+            setViewButtons();
+            setEditButtons();
+        }
+    }).css('width', '100%');
+
     var reloadData = function(){
         $.post("{{ path('patient_results') }}", {}, function(results){
             if(results.success){
-                var actions = '<button class="patient-show">show</button><button class="patient-edit" >edit</button>';
+                var actions = '<div><button class="patient-show">show</button><button class="patient-edit" >edit</button></div>';
                 dTable.fnClearTable();
-                $.each(results.data, function(k,v){ dTable.fnAddData([v.name, v.indication, v.counselor, v.created, v.diagnostic_procedure, v.race, v.site, actions]); });
+                $.each(results.data, function(k,v){
+                    dTable.fnAddData([
+                        v.id,
+                        v.name,
+                        v.indication,
+                        v.counselor,
+                        v.created,
+                        v.diagnostic_procedure,
+                        v.race,
+                        v.site,
+                        actions
+                    ]);
+                });
+
+                setViewButtons();
+                setEditButtons();
             } else {
                 alert("an error occurred retrieving the data from the server");
             }
@@ -148,7 +261,34 @@ $(document).ready( function () {
         buttons: {
             "Create Patient": function() {
                 $.post("{{ path('patient_create') }}", $("#new-patient-form").serialize());
+                $( this ).dialog( "close" );
                 reloadData();
+            },
+            Cancel: function() {
+                $( this ).dialog( "close" );
+            }
+        },
+        close: function() {
+            allNewFields.val( "" ).removeClass( "ui-state-error" );
+        },
+        open: function(event, ui) {
+            created.datepicker().val($.datepicker.formatDate('yy/mm/dd', new Date()));
+        }
+    });
+
+    $( "#edit-patient" ).dialog({
+        autoOpen: false,
+        height: 675,
+        width: 350,
+        modal: true,
+        buttons: {
+            "Edit Patient": function() {
+                var updateUrl = Routing.generate('patient_update', {id: EditingId});
+                var formData = $("#edit-patient-form").serialize();
+                $.post(updateUrl, formData, function(data){
+                    reloadData();
+                });
+
                 $( this ).dialog( "close" );
             },
             Cancel: function() {
@@ -156,15 +296,12 @@ $(document).ready( function () {
             }
         },
         close: function() {
-            allFields.val( "" ).removeClass( "ui-state-error" );
+            allEditFields.val( "" ).removeClass( "ui-state-error" );
+        },
+        open: function(event, ui) {
+            edit_created.datepicker();
         }
     });
-
-    $( "#create-patient" )
-        .button()
-        .click(function() {
-            $( "#new-patient" ).dialog( "open" );
-        });
 
     $( "#view-patient" ).dialog({
         autoOpen: false,
@@ -174,6 +311,8 @@ $(document).ready( function () {
         modal: true,
         buttons: {
             "Edit": function() {
+                loadEditForm('doeet');
+                $("#edit-patient").dialog("open");
                 $( this ).dialog( "close" );
             },
             "Ok": function() {
@@ -182,24 +321,14 @@ $(document).ready( function () {
         }
     });
 
-    $( ".patient-show" )
+    $( "#create-patient" )
         .button()
         .click(function() {
-            var trData = $( $( this ).parent().parent()[0]);
-            var payload = getDataFromNode(trData);
-            show_name.text(payload[0]);
-            show_indication.text(payload[1]);
-            show_counselor.text(payload[2]);
-            show_created.text(payload[3]);
-            show_diagnosticProcedure.text(payload[4]);
-            show_race.text(payload[5]);
-            show_site.text(payload[6]);
-            $( "#view-patient" ).dialog( "open" );
+            $( "#new-patient" ).dialog( "open" );
         });
 
-
+    reloadData();
 });
-
 </script>
 
 {% endblock %}

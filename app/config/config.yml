@@ -81,6 +81,11 @@ fos_user:
             type:    sorabji_user_registration # this maps to an alias in the services.xml
             handler:    sorabji.registration.form.handler # this is just the plain id, no tags used...
 
+fos_js_routing:
+    routes_to_expose:
+      - "patient_update"
+      - "patient_create"
+
 sorabji_patient:
   indications:
     - "choose"

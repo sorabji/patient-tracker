@@ -27,10 +27,13 @@
     '@SorabjiPatientBundle/Resources/public/js/DataTables-1.9.3/media/js/jquery.dataTables.js'
     '@SorabjiPatientBundle/Resources/public/js/custom.js'
     %}
-    <script src="{{ asset_url }}" ></script>
-    <script src="http://code.jquery.com/ui/jquery-ui-git.js"></script>
+    <script type="text/javascript" src="{{ asset_url }}" ></script>
 
     {% endjavascripts %}
+
+    <script type="text/javascript" src="http://code.jquery.com/ui/jquery-ui-git.js"></script>
+    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
     {% endblock %}
 
 
